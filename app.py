@@ -9,6 +9,8 @@ from nutrition import load_foods, calculate_meal, match_food
 from database import init_database, save_meal, get_daily_total
 from vision import analyze_image, VisionError
 
+NO_MATCH_OPTION = "Eşleşme yok (toplama dahil edilmesin)"
+
 init_database()
 
 
@@ -64,20 +66,18 @@ if uploaded_file is not None:
     if st.button("🔍 Yemeği Analiz Et"):
 
         with st.spinner("Yemek analiz ediliyor..."):
-         
-           with st.spinner("Yemek analiz ediliyor..."):
 
-               try:
-                  image = None if mock_mode else Image.open(uploaded_file)
+            try:
+                image = None if mock_mode else Image.open(uploaded_file)
 
-                  st.session_state.analysis = analyze_image(
-                      image,
-                      client=client,
-                      mock_mode=mock_mode
-                   )
+                st.session_state.analysis = analyze_image(
+                    image,
+                    client=client,
+                    mock_mode=mock_mode
+                )
 
-               except VisionError as e:
-                   st.error(str(e))
+            except VisionError as e:
+                st.error(str(e))
 
 # --------------------------------------------------
 # ANALİZ SONUCU
@@ -157,11 +157,12 @@ if st.session_state.analysis is not None:
 
             selected_food = st.selectbox(
                 f"{item['name']} için besin kaydı seç:",
-                candidate_names,
+                [NO_MATCH_OPTION] + candidate_names,
                 key=f"correction_{item['name']}"
             )
 
-            corrections[item["name"]] = selected_food
+            if selected_food != NO_MATCH_OPTION:
+                corrections[item["name"]] = selected_food
 
 
     # Kullanıcı seçimleriyle birlikte besin değerlerini hesapla
@@ -209,8 +210,19 @@ if st.session_state.analysis is not None:
         else:
 
             st.warning(
-                f"{item['name']} için otomatik eşleştirme bulunamadı."
+                f"{item['name']} için besin kaydı seçilmedi veya bulunamadı; toplama dahil edilmedi."
             )
+
+
+    unmatched = [
+        item["name"] for item in meal_result["items"]
+        if item["status"] != "exact"
+    ]
+
+    if unmatched:
+        st.warning(
+            "Toplama dahil edilmeyen yiyecekler: " + ", ".join(unmatched)
+        )
 
 
     st.subheader("📊 Toplam")

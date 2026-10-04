@@ -1,8 +1,52 @@
 import csv
+import re
+import unicodedata
 from pathlib import Path
 
 
 FOODS_FILE = Path("data/foods.csv")
+
+MAX_CANDIDATES = 5
+
+# Türkçe harf dönüşümleri
+_TR_LOWER = str.maketrans({"İ": "i", "I": "ı"})   # Python'un "İ".lower() hatasını önler
+_TR_FOLD = str.maketrans("çğıöşü", "cgiosu")      # noktasız yazımlarla da eşleşsin
+
+
+def normalize_text(text):
+    """Karşılaştırma için metni hazırlar.
+
+    - Türkçe büyük/küçük harf kuralı (İ -> i, I -> ı)
+    - noktalama temizlenir, boşluklar tekilleştirilir
+    - ç ğ ı ö ş ü -> c g i o s u
+    """
+    text = unicodedata.normalize("NFC", text).translate(_TR_LOWER).lower()
+    text = text.replace("\u0307", "")
+    text = re.sub(r"[^\w\s]", " ", text)
+    text = text.translate(_TR_FOLD)
+    return " ".join(text.split())
+
+
+# Tek başına yemeğin kimliğini belirtmeyen niteleyici kelimeler.
+# Bunlar aday olmak için yetmez; sadece sıralamaya küçük katkı yapar.
+WEAK_WORDS = {normalize_text(word) for word in [
+    "ve", "ile", "et", "eti", "yemek", "yemeği", "geleneksel", "ev", "yapımı",
+    "pişmiş", "haşlanmış", "ızgara", "fırında", "kızarmış", "közlenmiş",
+    "kuru", "taze", "çiğ", "tam", "yağlı", "yağsız", "beyaz", "suda",
+    "sütlü", "bitter",
+]}
+
+
+def _words_match(a, b):
+    """İki kelime aynıysa veya biri (4+ harf) diğerinin başlangıcıysa eşleşir.
+
+    Örnek: nohutlu ~ nohut, pilavı ~ pilav.
+    """
+    if a == b:
+        return True
+
+    short, long_ = sorted((a, b), key=len)
+    return len(short) >= 4 and long_.startswith(short)
 
 
 def load_foods():
@@ -26,63 +70,71 @@ def load_foods():
 
 
 def find_food(food_name, foods):
-    """Yemek adını besin tablosunda arar."""
+    """Yemek adını besin tablosunda arar. Sadece KESİN eşleşmeyi döndürür.
 
-    search_name = food_name.lower().strip()
+    Kesin eşleşme: normalize edilmiş kelimeler aynı (sıra önemsiz).
+    Örn. "Haşlanmış yumurta" = "Yumurta haşlanmış".
+    Benzer/kısmi eşleşmeler find_food_candidates ile aday olarak sunulur.
+    """
 
-    # Önce birebir eşleşme
+    search_words = sorted(normalize_text(food_name).split())
+
+    if not search_words:
+        return None
+
     for food in foods:
-        if food["name"].lower() == search_name:
-            return food
-
-    # Daha sonra isim içinde eşleşme
-    for food in foods:
-        table_name = food["name"].lower()
-
-        if search_name in table_name or table_name in search_name:
+        if sorted(normalize_text(food["name"]).split()) == search_words:
             return food
 
     return None
 
 def find_food_candidates(food_name, foods):
-    """Yemek adına göre olası besin kayıtlarını bulur."""
+    """Yemek adına göre olası besin kayıtlarını bulur.
 
-    search_words = set(food_name.lower().split())
+    Aday olmak için sorgudaki en az bir "güçlü" kelimenin (WEAK_WORDS dışında)
+    tablodaki adda geçmesi gerekir. En iyi MAX_CANDIDATES aday döner.
+    """
 
-    # Çok genel kelimeleri çıkarıyoruz.
-    stop_words = {
-        "ve",
-        "ile",
-        "eti",
-        "et",
-        "yemeği",
-        "yemek",
-        "pişmiş",
-        "geleneksel"
-    }
+    query_words = normalize_text(food_name).split()
+    strong_words = [w for w in query_words if w not in WEAK_WORDS]
+    weak_words = [w for w in query_words if w in WEAK_WORDS]
 
-    search_words = search_words - stop_words
-
-    candidates = []
+    scored = []
 
     for food in foods:
-        food_words = set(food["name"].lower().split())
+        food_words = normalize_text(food["name"]).split()
 
-        common_words = search_words.intersection(food_words)
+        matched_strong = {
+            q for q in strong_words
+            if any(_words_match(q, f) for f in food_words)
+        }
 
-        if common_words:
-            candidates.append({
-                "food": food,
-                "matched_words": common_words,
-                "match_count": len(common_words)
-            })
+        if not matched_strong:
+            continue
 
-    candidates.sort(
-        key=lambda x: x["match_count"],
-        reverse=True
-    )
+        matched_weak = {
+            q for q in weak_words
+            if any(_words_match(q, f) for f in food_words)
+        }
 
-    return candidates
+        candidate = {
+            "food": food,
+            "matched_words": matched_strong | matched_weak,
+            "match_count": len(matched_strong)
+        }
+
+        sort_key = (
+            -len(matched_strong),
+            -len(matched_weak),
+            len(food_words),
+            food["name"]
+        )
+
+        scored.append((sort_key, candidate))
+
+    scored.sort(key=lambda pair: pair[0])
+
+    return [candidate for _, candidate in scored[:MAX_CANDIDATES]]
 
 def match_food(food_name, foods):
     """
