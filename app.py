@@ -1,14 +1,13 @@
 import streamlit as st
 import os
-import json
 
 from dotenv import load_dotenv
 from google import genai
 from PIL import Image
 
-from models import FoodAnalysis
 from nutrition import load_foods, calculate_meal, match_food
 from database import init_database, save_meal, get_daily_total
+from vision import analyze_image, VisionError
 
 init_database()
 
@@ -66,73 +65,19 @@ if uploaded_file is not None:
 
         with st.spinner("Yemek analiz ediliyor..."):
          
-            if mock_mode:
+           with st.spinner("Yemek analiz ediliyor..."):
 
-                with open("fixtures/mock_analysis.json", "r", encoding="utf-8") as file:
-                    mock_data = json.load(file)
+               try:
+                  image = None if mock_mode else Image.open(uploaded_file)
 
-                analysis = FoodAnalysis.model_validate(mock_data)
+                  st.session_state.analysis = analyze_image(
+                      image,
+                      client=client,
+                      mock_mode=mock_mode
+                   )
 
-                st.session_state.analysis = analysis
-
-            else:
-
-                image = Image.open(uploaded_file)
-
-                prompt = """
-Bu fotoğrafı analiz et.
-
-Fotoğrafta görünen yiyecekleri tespit et.
-Her yiyecek için:
-
-- name: yiyeceğin adı
-- grams: tahmini gramaj
-- confidence: 0 ile 1 arasında güven skoru
-
-Sadece JSON formatında cevap ver:
-
-{
-  "items": [
-    {
-      "name": "yiyecek adı",
-      "grams": 100,
-      "confidence": 0.85
-    }
-  ],
-  "notes": "Varsa kısa not"
-}
-
-Kalori veya besin değerlerini hesaplama.
-Tahmin edemediğin bir yiyeceği uydurma.
-"""
-
-                response = client.models.generate_content(
-                    model="gemini-3.5-flash-lite",
-                    contents=[prompt, image]
-                )
-
-                cleaned_response = response.text.strip()
-
-                if cleaned_response.startswith("```json"):
-                    cleaned_response = cleaned_response[7:]
-
-                if cleaned_response.endswith("```"):
-                    cleaned_response = cleaned_response[:-3]
-
-                cleaned_response = cleaned_response.strip()
-
-                try:
-
-                    data = json.loads(cleaned_response)
-
-                    analysis = FoodAnalysis.model_validate(data)
-
-                    st.session_state.analysis = analysis
-
-                except Exception as e:
-
-                    st.error("Gemini cevabı işlenemedi.")
-                    st.write(e)
+               except VisionError as e:
+                   st.error(str(e))
 
 # --------------------------------------------------
 # ANALİZ SONUCU
