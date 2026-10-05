@@ -1,0 +1,352 @@
+[
+  {
+    "image": "cheese-burger-7323672_1280.jpg",
+    "items": [
+      {
+        "name": "Hamburger ekmeği",
+        "grams": 80.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Dana köfte",
+        "grams": 120.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Cheddar peyniri",
+        "grams": 20.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Domates",
+        "grams": 15.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Marul",
+        "grams": 10.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Turşu",
+        "grams": 15.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Domates sosu ve hardal",
+        "grams": 20.0,
+        "confidence": 0.85
+      }
+    ],
+    "notes": "Görselde tam bir hamburger ve içeriği yer almaktadır."
+  },
+  {
+    "image": "depositphotos_384578202-stock-photo-traditional-turkish-food-menemen-made.jpg",
+    "items": [
+      {
+        "name": "Menemen",
+        "grams": 250.0,
+        "confidence": 0.95
+      }
+    ],
+    "notes": "Bakır sahanda servis edilmiş domates, biber ve yumurta karışımı."
+  },
+  {
+    "image": "fırındatavukimages.jpg",
+    "items": [
+      {
+        "name": "Bütün fırın tavuk",
+        "grams": 1200.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Fırın patates",
+        "grams": 200.0,
+        "confidence": 0.85
+      },
+      {
+        "name": "Sarımsak",
+        "grams": 20.0,
+        "confidence": 0.8
+      }
+    ],
+    "notes": "Fırın tepsisinde pişmiş bütün tavuk ve yanında patatesler görülmektedir."
+  },
+  {
+    "image": "images (1).jpg",
+    "items": [
+      {
+        "name": "İçli Köfte",
+        "grams": 450.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Limon",
+        "grams": 60.0,
+        "confidence": 0.9
+      }
+    ],
+    "notes": "Fotoğrafta 5 adet kızartılmış içli köfte ve limon dilimleri bulunmaktadır."
+  },
+  {
+    "image": "images (2).jpg",
+    "items": [
+      {
+        "name": "Izgara Köfte",
+        "grams": 150.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Izgara Biber",
+        "grams": 30.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Izgara Domates",
+        "grams": 40.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Sos",
+        "grams": 25.0,
+        "confidence": 0.8
+      }
+    ],
+    "notes": "Tabakta ızgara köfte, domates, biber ve sos bulunmaktadır."
+  },
+  {
+    "image": "images (3).jpg",
+    "items": [
+      {
+        "name": "Yaprak sarma",
+        "grams": 220.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Maydanoz",
+        "grams": 5.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Yoğurt sos",
+        "grams": 50.0,
+        "confidence": 0.75
+      }
+    ],
+    "notes": "Tabakta zeytinyağlı yaprak sarma, yanında sos ve maydanoz süslemesi bulunmaktadır."
+  },
+  {
+    "image": "images (4).jpg",
+    "items": [
+      {
+        "name": "Adana Kebap",
+        "grams": 150.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Lavaş Ekmek",
+        "grams": 50.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Közlenmiş Domates",
+        "grams": 90.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Közlenmiş Biber",
+        "grams": 40.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Pide Parçası",
+        "grams": 40.0,
+        "confidence": 0.85
+      },
+      {
+        "name": "Maydanoz",
+        "grams": 15.0,
+        "confidence": 0.9
+      }
+    ],
+    "notes": "Tabakta kebap, lavaş ve garnitürler yer almaktadır."
+  },
+  {
+    "image": "images (5).jpg",
+    "items": [
+      {
+        "name": "Pizza",
+        "grams": 350.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Jalapeno",
+        "grams": 15.0,
+        "confidence": 0.8
+      }
+    ],
+    "notes": "Fotoğrafta karışık pizza dilimleri ve yanında jalapeno biber dilimleri görülmektedir."
+  },
+  {
+    "image": "images (6).jpg",
+    "items": [
+      {
+        "name": "Mercimek çorbası",
+        "grams": 350.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Ramazan pidesi",
+        "grams": 120.0,
+        "confidence": 0.95
+      }
+    ],
+    "notes": "Çorbanın üzerinde tereyağında kızdırılmış toz biber sosu bulunmaktadır."
+  },
+  {
+    "image": "images (7).jpg",
+    "items": [
+      {
+        "name": "Haşlanmış Yumurta",
+        "grams": 250.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Maydanoz",
+        "grams": 5.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Kuru Nane",
+        "grams": 10.0,
+        "confidence": 0.85
+      }
+    ],
+    "notes": "Fotoğrafta haşlanmış yumurta dilimleri, süsleme amaçlı taze maydanoz ve yandaki kasede kuru nane görülmektedir."
+  },
+  {
+    "image": "images (8).jpg",
+    "items": [
+      {
+        "name": "Et Sote",
+        "grams": 350.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Kırmızı Biber",
+        "grams": 50.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Yeşil Biber",
+        "grams": 30.0,
+        "confidence": 0.85
+      }
+    ],
+    "notes": "Fotoğrafta ana yemek olarak et sote görünmektedir."
+  },
+  {
+    "image": "images - Kopya.jpg",
+    "items": [
+      {
+        "name": "Tavuklu ve nohutlu pirinç pilavı",
+        "grams": 250.0,
+        "confidence": 0.95
+      }
+    ],
+    "notes": "Tabakta kubbe şeklinde servis edilmiş tavuklu ve nohutlu pirinç pilavı bulunmaktadır."
+  },
+  {
+    "image": "images.jpg",
+    "items": [
+      {
+        "name": "Çiğ Köfte",
+        "grams": 200.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Marul",
+        "grams": 50.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Domates",
+        "grams": 40.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Limon",
+        "grams": 30.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Maydanoz",
+        "grams": 10.0,
+        "confidence": 0.85
+      }
+    ],
+    "notes": "Tabakta servis edilmiş çiğ köfte ve garnitürler."
+  },
+  {
+    "image": "karnıyarıkimages.jpg",
+    "items": [
+      {
+        "name": "Karnıyarık",
+        "grams": 220.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Pirinç Pilavı",
+        "grams": 180.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Cacık",
+        "grams": 200.0,
+        "confidence": 0.9
+      }
+    ],
+    "notes": "Fotoğrafta ana yemek olarak karnıyarık, yanında pirinç pilavı ve bir kase cacık görülmektedir."
+  },
+  {
+    "image": "tantuni.jpg",
+    "items": [
+      {
+        "name": "Kavurmalı sandviç",
+        "grams": 250.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Susamlı sandviç ekmeği",
+        "grams": 120.0,
+        "confidence": 0.95
+      },
+      {
+        "name": "Kavurma",
+        "grams": 100.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Domates",
+        "grams": 20.0,
+        "confidence": 0.8
+      },
+      {
+        "name": "Maydanoz",
+        "grams": 5.0,
+        "confidence": 0.7
+      },
+      {
+        "name": "Biber turşusu",
+        "grams": 15.0,
+        "confidence": 0.9
+      },
+      {
+        "name": "Limon",
+        "grams": 20.0,
+        "confidence": 0.9
+      }
+    ],
+    "notes": "Fotoğrafta kavurmalı ekmek arası, yanında turşu biber ve limon dilimi bulunmaktadır."
+  }
+]
