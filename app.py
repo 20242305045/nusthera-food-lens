@@ -102,6 +102,12 @@ if st.session_state.analysis is not None:
             f"Güven: {item.confidence:.2f}"
         )
 
+        if item.confidence < 0.70:
+            st.warning(
+                f"{item.name} için tespit güveni düşük "
+                f"({item.confidence:.2f}). Lütfen sonucu kontrol edin."
+        )
+
 
     if analysis.notes:
 
