@@ -51,11 +51,17 @@ uploaded_file = st.file_uploader(
     type=["jpg", "jpeg", "png"]
 )
 
+camera_file = st.camera_input(
+    "Veya kamerayla yemek fotoğrafı çek"
+)
 
-if uploaded_file is not None:
+image_file = camera_file if camera_file is not None else uploaded_file
+
+
+if image_file is not None:
 
     st.image(
-        uploaded_file,
+        image_file,
         caption="Yüklenen fotoğraf",
         use_container_width=True
     )
@@ -68,7 +74,7 @@ if uploaded_file is not None:
         with st.spinner("Yemek analiz ediliyor..."):
 
             try:
-                image = None if mock_mode else Image.open(uploaded_file)
+                image = None if mock_mode else Image.open(image_file)
 
                 st.session_state.analysis = analyze_image(
                     image,
