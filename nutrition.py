@@ -3,7 +3,6 @@ import re
 import unicodedata
 from pathlib import Path
 
-
 FOODS_FILE = Path("data/foods.csv")
 
 MAX_CANDIDATES = 5

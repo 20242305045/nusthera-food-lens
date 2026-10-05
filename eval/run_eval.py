@@ -1,14 +1,12 @@
 import csv
 import json
-import re
 import sys
 import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from nutrition import load_foods, find_food
-
+from nutrition import find_food, load_foods
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LABELS_FILE = BASE_DIR / "eval" / "labels.csv"

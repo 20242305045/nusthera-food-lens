@@ -1,5 +1,4 @@
 from pydantic import BaseModel, Field
-from typing import List
 
 
 class FoodItem(BaseModel):
@@ -9,5 +8,5 @@ class FoodItem(BaseModel):
 
 
 class FoodAnalysis(BaseModel):
-    items: List[FoodItem]
+    items: list[FoodItem]
     notes: str = ""

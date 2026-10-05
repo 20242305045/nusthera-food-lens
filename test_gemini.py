@@ -1,12 +1,11 @@
-from dotenv import load_dotenv
-import os
 import json
+import os
 
+from dotenv import load_dotenv
 from google import genai
 from PIL import Image
 
 from models import FoodAnalysis
-
 
 load_dotenv()
 
@@ -62,11 +61,9 @@ print(response.text)
 # Markdown kod bloğu varsa temizle
 cleaned_response = response.text.strip()
 
-if cleaned_response.startswith("```json"):
-    cleaned_response = cleaned_response[7:]
+cleaned_response = cleaned_response.removeprefix("```json")
 
-if cleaned_response.endswith("```"):
-    cleaned_response = cleaned_response[:-3]
+cleaned_response = cleaned_response.removesuffix("```")
 
 cleaned_response = cleaned_response.strip()
 
@@ -99,7 +96,7 @@ for item in analysis.items:
 
 print(f"\nNot: {analysis.notes}")
 
-from nutrition import load_foods, calculate_meal
+from nutrition import calculate_meal, load_foods
 
 foods = load_foods()
 

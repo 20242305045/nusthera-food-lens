@@ -1,13 +1,13 @@
-import streamlit as st
 import os
 
+import streamlit as st
 from dotenv import load_dotenv
 from google import genai
 from PIL import Image
 
-from nutrition import load_foods, calculate_meal, match_food
-from database import init_database, save_meal, get_daily_total
-from vision import analyze_image, VisionError
+from database import get_daily_total, init_database, save_meal
+from nutrition import calculate_meal, load_foods, match_food
+from vision import VisionError, analyze_image
 
 NO_MATCH_OPTION = "Eşleşme yok (toplama dahil edilmesin)"
 

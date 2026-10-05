@@ -12,7 +12,6 @@ from pydantic import ValidationError
 
 from models import FoodAnalysis
 
-
 DEFAULT_MODEL = "gemini-3.5-flash-lite"
 MOCK_FILE = Path(__file__).parent / "fixtures" / "mock_analysis.json"
 MAX_ATTEMPTS = 2  # ilk deneme + 1 retry
@@ -55,11 +54,9 @@ def _clean_json_text(text):
     """Gemini'nin cevabındaki olası ```json ... ``` işaretlerini temizler."""
     text = text.strip()
 
-    if text.startswith("```json"):
-        text = text[7:]
+    text = text.removeprefix("```json")
 
-    if text.endswith("```"):
-        text = text[:-3]
+    text = text.removesuffix("```")
 
     return text.strip()
 

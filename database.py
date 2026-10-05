@@ -1,7 +1,6 @@
 import sqlite3
 from datetime import datetime
 
-
 DB_FILE = "food_lens.db"
 
 
@@ -46,7 +45,7 @@ def save_meal(meal_result):
         )
         VALUES (?, ?, ?, ?, ?)
     """, (
-        datetime.now().isoformat(),
+        datetime.now().astimezone().isoformat(),
         totals["kcal"],
         totals["protein_g"],
         totals["carbs_g"],
@@ -59,7 +58,7 @@ def save_meal(meal_result):
 def get_daily_total():
     """Bugün kaydedilen öğünlerin toplam besin değerlerini getirir."""
 
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now().astimezone().strftime("%Y-%m-%d")
 
     connection = sqlite3.connect(DB_FILE)
 
