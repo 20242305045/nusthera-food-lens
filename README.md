@@ -77,6 +77,13 @@ nusthera-food-lens/
 │   ├── labels.csv
 │   ├── predictions.json
 │   └── run_eval.py
+├── tests/
+│   ├── test_nutrition.py
+│   └── test_vision.py
+├── pytest.ini
+├── .github/
+│   └── workflows/
+│       └── tests.yml
 └── test_images/
 
 ## Setup
@@ -110,7 +117,7 @@ The application is available at:
 
 http://localhost:8501
 
-The first screen allows the user to upload a food image and choose between Mock Mode and Live Mode.
+The application mode is controlled through environment variables. The user uploads a food image from the Streamlit interface, while Mock Mode or Live Mode is selected through .env.
 
 ## Mock Mode
 
@@ -214,9 +221,29 @@ The largest error comes from gram estimation. For example, the whole roasted chi
 
 ## Testing
 
-Basic application tests can be run with:
+Automated tests are located in the `tests/` directory.
 
-python test_gemini.py
+Run the full test suite:
+
+python -m pytest -v
+
+The project currently contains 15 automated tests covering nutrition matching, nutrition calculations, food corrections, and Gemini vision error handling.
+
+### Continuous Integration
+
+GitHub Actions runs automatically on every push and pull request.
+
+The CI pipeline:
+
+- installs the project dependencies
+- runs Ruff linting
+- runs all 15 automated tests
+
+A successful CI run confirms that the code passes both linting and automated tests.
+
+Linting:
+
+ruff check .
 
 Evaluation:
 
